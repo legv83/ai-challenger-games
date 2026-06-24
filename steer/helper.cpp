@@ -35,6 +35,7 @@ Helper::Helper(QString id, int seed)
     for (int i=0;i<10;i++) {
         positions[i][0] = (rand() % 200) - 100;
         positions[i][1] = (rand() % 200) - 100;
+        t_angles[i] = (rand() % 360);
     }
     cur_enemy=0;
 }
@@ -91,6 +92,15 @@ void Helper::paint(QPainter *painter, QPaintEvent *event, int elapsed)
     cur_y = cur_y - cos(angle/180.0 * M_PI) * speed;
     if (cur_y > 100) {cur_y = 100; angle = 180 - angle;}
     if (cur_y < -100) {cur_y = -100; angle = 180 - angle;}
+
+    float enemy_speed = .25;
+    positions[cur_enemy][0] = positions[cur_enemy][0] + sin(t_angles[cur_enemy]/180.0 * M_PI) * enemy_speed;
+    if (positions[cur_enemy][0] > 100) {positions[cur_enemy][0] = 100; t_angles[cur_enemy] = -t_angles[cur_enemy];}
+    if (positions[cur_enemy][0] < -100) {positions[cur_enemy][0] = -100; t_angles[cur_enemy] = -t_angles[cur_enemy];}
+
+    positions[cur_enemy][1] = positions[cur_enemy][1] - cos(t_angles[cur_enemy]/180.0 * M_PI) * enemy_speed;
+    if (positions[cur_enemy][1] > 100) {positions[cur_enemy][1] = 100; t_angles[cur_enemy] = 180 - t_angles[cur_enemy];}
+    if (positions[cur_enemy][1] < -100) {positions[cur_enemy][1] = -100; t_angles[cur_enemy] = 180 - t_angles[cur_enemy];}
 
 }
 

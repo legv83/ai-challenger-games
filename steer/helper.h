@@ -30,6 +30,8 @@ private:
     float cur_x, cur_y;
     float angle, speed;
     float positions[10][2];
+    float t_angles[10];
+
     int cur_enemy;
     QWebSocket m_webSocket;
     int connected = 0;
